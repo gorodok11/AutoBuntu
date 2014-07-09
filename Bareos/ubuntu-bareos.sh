@@ -3,7 +3,7 @@
 
 # Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
-   echo "Скрипт установки работает только из под пользователем 'root'." 1>&2
+   echo "Скрипт установки работает только под пользователем 'root'." 1>&2
    exit 1
 fi
 
@@ -17,6 +17,6 @@ printf "deb $URL /\n" > /etc/apt/sources.list.d/bareos.list
 wget -q $URL/Release.key -O- | apt-key add -
 
 apt-get update
-apt-get install bareos bareos-database-postgresql
+apt-get -y install bareos bareos-database-mysql
 
 # Конфигурация
