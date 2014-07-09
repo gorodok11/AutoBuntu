@@ -7,6 +7,7 @@
 ```
 sudo apt-get -y install git
 git clone https://github.com/unitlinux/AutoBuntu.git
+chmod -R 755 AutoBuntu
 cd AutoBuntu
 ./main.sh
 ```
