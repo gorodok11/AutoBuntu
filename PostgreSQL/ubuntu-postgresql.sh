@@ -9,5 +9,5 @@ fi
 
 apt-get -y install postgresql postgresql-contrib
 
-read -p "Введите имя пользователя для доступа к консоли: " PGPassword
+read -p "Введите пароль пользователя 'postgres' для доступа к консоли: " PGPassword
 sudo -u postgres psql -d postgres -c "ALTER USER postgres WITH PASSWORD '$PGPassword';"

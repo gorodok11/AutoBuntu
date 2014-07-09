@@ -7,7 +7,7 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-apt-get -y install phppgadmin
+apt-get -y install phppgadmin apache2-utils
 
 # Настройка
 sed -i "s/^# allow from all/allow from all/" /etc/apache2/conf.d/phppgadmin
