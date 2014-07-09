@@ -1,14 +1,9 @@
 #!/bin/bash
-# Gorodok11
-# Часть кода заимствована с других открытых проектов которые указаны ниже
-# AutoSnort: https://github.com/da667/Autosnort
-# Triptych Security - Tony Robinson/da_667
-# twitter: @da_667
-# email: deusexmachina667@gmail.com
+# Файл содержит глобальные функции
 
 # Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
-   echo "Скрипт установки работает только из под пользователя'root' dude." 1>&2
+   echo "Скрипт установки работает только из под пользователя'root'." 1>&2
    exit 1
 fi
 

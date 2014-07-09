@@ -1,8 +1,9 @@
-#!/bin/bash
+#!/bin/bas
+# Главное меню установочного скрипта
 
 # Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
-   echo "Скрипт установки работает только из под пользователя'root' dude." 1>&2
+   echo "Скрипт установки работает только из под пользователя'root'." 1>&2
    exit 1
 fi
 
@@ -13,7 +14,7 @@ tput clear
 
 # Перемещение курсора по адресу X,Y (верхний левый угол это 0,0)
 tput cup 1 0
-# Создано с http://patorjk.com/software/taag/
+# Создано с помощью http://patorjk.com/software/taag/
 
 tput setaf 4
 echo "       _         _        ____              _          "
@@ -34,16 +35,18 @@ echo "M A I N - M E N U"
 tput sgr0
 
 tput cup 14 15
-echo "1. Autoinstall Ubuntu."
+echo "1. Автоматическая установка Ubuntu."
 
 tput cup 15 15
-echo "2. Exit."
+echo "2. Выход."
 
 # Set bold mode
 tput bold
 tput cup 17 15
-read -p "Enter your choice [1-2] " choice
+read -p "Введите выбранное число [1-2] " choice
 
 tput clear
 tput sgr0
 tput rc
+
+# --> Доработать!
