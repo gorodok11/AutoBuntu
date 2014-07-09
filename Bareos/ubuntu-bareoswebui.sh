@@ -1,5 +1,5 @@
 #!/bin/bash
-# Установка non-free пакетов
+# Установка интерфейса Bareos WebUI
 
 # Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
@@ -7,4 +7,5 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-apt-get -y install msttcorefonts
+# Детали на:
+# https://github.com/bareos/bareos-webui
