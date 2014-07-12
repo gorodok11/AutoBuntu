@@ -9,12 +9,4 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-print_status "Обновление операционной системы..."
-
-apt-get update > /dev/null 2>&1
-apt-get -y upgrade > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-  print_good "Система полностью обновлена."
-else
-  print_error "Сбой при обновлении системы."
-fi
+run_command "Обновление операционной системы..." apt-get update && apt-get -y upgrade
