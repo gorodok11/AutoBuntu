@@ -47,7 +47,7 @@ function run_command()
 {
 	echo -n "$1..."
         shift
-        STDOUT=$($* 2>&1) && (echo "DONE") || (echo "ERROR"; echo $STDOUT; kill -9 $$)
+        STDOUT=$($* 2>&1) && (echo -e "\x1B[01;32m[DONE]\x1B[0m") || (echo -e "\x1B[01;31m[ERROR]\x1B[0m"; echo $STDOUT; kill -9 $$)
 }
 #_______________________________________________________________________
 # Распаковка архивов

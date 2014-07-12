@@ -14,3 +14,7 @@ echo $ROOT_PATH
 BASE_DIR=$(dirname $(readlink -f $0))
 echo $BASE_DIR
 ```
+### Как запустить скрипт из директории на уровень выше?
+```
+. ./functions.sh
+```
