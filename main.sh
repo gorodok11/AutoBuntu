@@ -41,8 +41,7 @@ tput cup 12 0
 # Set bold mode
 tput bold
 echo "Это скрипт автоматической установки набора программ под "
-echo "Ubuntu Server 12.04 для использования в качестве шлюза  "
-echo "интернет."
+echo "Ubuntu Server 14.04"
 
 while true; do
      read -p "Приступить к установке? (y/n)" warncheck
@@ -170,7 +169,7 @@ tput sgr0
 tput setaf 2
 echo "Запуск apt-get update и apt-get upgrade..."
 tput sgr0
-apt-get update && apt-get -y upgrade
+apt-get update && apt-get -y upgrade 
 if [ $? -eq 0 ]; then
   tput setaf 2
   echo "Система полностью обновлена."

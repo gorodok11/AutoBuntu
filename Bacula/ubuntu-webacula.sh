@@ -6,20 +6,51 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
+source ../credentials.sh
+
+apt-get -y install apache2 php5 libapache2-mod-php5 php5-mysql php5-gd
+
 a2enmod php5
 a2enmod rewrite
 
 wget http://downloads.sourceforge.net/project/webacula/webacula/5.5.1/webacula-5.5.1.tar.gz
 tar -zxvf webacula-5.5.1.tar.gz
-mv webacula-5.5.1 /var/www/html/webacula
+mv webacula-5.5.1 /var/www/webacula
 
 
 wget https://packages.zendframework.com/releases/ZendFramework-1.12.3/ZendFramework-1.12.3.tar.gz
 tar -zxvf ZendFramework-1.12.3.tar.gz
-mv ZendFramework-1.12.3/library/Zend/ /var/www/html/webacula/library/
-cp -r ZendFramework-1.12.3/library/Zend/ /var/www/html/webacula/library/
+cp -r ZendFramework-1.12.3/library/Zend/ /var/www/webacula/library/
 
-nano /var/www/html/webacula/install/db.conf
+
+echo '# See also application/config.ini
+
+# bacula settings
+db_name="bacula"
+# for Sqlite only
+db_name_sqlite="/var/bacula/working/bacula.db"
+db_user="root"
+
+# CHANGE_THIS
+db_pwd=""
+
+# Webacula web interface settings
+#
+# Built-in superuser login is 'root'
+#
+# CHANGE_THIS
+webacula_root_pwd=""' /var/www/webacula/install/db.conf
+
+
+
+
+
+
+
+
+
+
+nano /var/www/webacula/install/db.conf
 
 # bacula settings
 #db_name="bacula"
@@ -35,10 +66,10 @@ nano /var/www/html/webacula/install/db.conf
 #
 # CHANGE_THIS
 #webacula_root_pwd="12345"
-cd /var/www/html/webacula/install/MySql
+cd /var/www/webacula/install/MySql
  ./10_make_tables.sh
  ./20_acl_make_tables.sh
- nano /var/www/html/webacula/html/.htaccess
+ nano /var/www/webacula/html/.htaccess
 
 ## SetEnv APPLICATION_ENV development
 #SetEnv APPLICATION_ENV production
@@ -59,7 +90,7 @@ nano /etc/php5/apache2/php.ini
 # Change max_execution_time = 30
 # max_execution_time = 3600
 
-nano /var/www/html/webacula/application/config.ini
+nano /var/www/webacula/application/config.ini
 
 # Modufy next lines
 #db.adapter = PDO_MYSQL
@@ -76,7 +107,7 @@ chown www-data: /usr/bin/bconsole
 chmod u=rwx,g=rx,o= /usr/bin/bconsole
 chown www-data: /etc/bacula/bconsole.conf
 chmod u=rw,g=r,o= /etc/bacula/bconsole.conf
-chown -R www-data:www-data /var/www/html/webacula
+chown -R www-data:www-data /var/www/webacula
 
 nano /etc/apache2/sites-available/webacula.conf
 
@@ -96,8 +127,8 @@ nano /usr/include/php5/Zend/zend_API.h
 #define object_pp object_ptr
 
 #Paste these lines:
-#Alias /webacula /var/www/html/webacula/html
-#<Directory /var/www/html/webacula/html>
+#Alias /webacula /var/www/webacula/html
+#<Directory /var/www/webacula/html>
 #Options FollowSymLinks
 #AllowOverride All
 #Order deny,allow
