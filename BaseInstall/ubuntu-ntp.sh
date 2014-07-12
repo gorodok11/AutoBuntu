@@ -9,4 +9,4 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-run_command "Установка NTP сервера:" apt-get install -y ntp
+run_command "Установка NTP сервера:" apt-get -y install ntp

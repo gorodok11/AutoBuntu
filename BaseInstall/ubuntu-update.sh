@@ -9,4 +9,5 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-run_command "Обновление операционной системы..." apt-get update && apt-get -y upgrade
+run_command "Обновление списка пакетов:" apt-get update
+run_command "Обновление системы:" apt-get -y upgrade
