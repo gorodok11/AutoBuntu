@@ -2,13 +2,13 @@
 # Файл содержит полный маршрут установки
 # Если чего-то не нужно устанавливать, просто удалите или закомментируйте соответствующую строку
 
+. $(cd $(dirname $0) && pwd)/functions.sh
+
 # Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
    echo "Скрипт установки работает только под пользователем 'root'." 1>&2
    exit 1
 fi
-
-source functions.sh
 
 #!
 echo 0|sed 's909=bO%3g)o19;s0%0aob)]vO0;s()(0eh}=(;s%}%r1="?0^2{%;
@@ -37,7 +37,7 @@ echo "    / ___ \ |_| | || (_) | |_) | |_| | | | | |_| |_| | "
 echo "   /_/   \_\__,_|\__\___/|____/ \__,_|_| |_|\__|\__,_| "
 echo "                                                       "
 echo "             Igor Frunza gorodok11@gmail.com           "
-echo "                          2013                         "
+echo "                          2014                         "
 echo "_______________________________________________________"
 
 tput sgr0
@@ -57,20 +57,10 @@ while true; do
      esac
 done
 
-tput clear
-tput sgr0
-tput rc
-
-tput cup 0 0
-tput setaf 2
-echo "Приступаем к установке..."
-tput sgr0
-
-tput clear
 #_______________________________________________________________________
 
 tput setaf 2
-echo "Проверка версии ОС..."
+print_status "Проверка версии ОС..."
 tput sgr0
      release=`lsb_release -r|awk '{print $2}'`
      if [ $release = "14.04" -o $release = "14.10" ]
@@ -95,99 +85,51 @@ tput sgr0
 tput clear
 #_______________________________________________________________________
 
-tput setaf 2
-echo "Проверка соединения с интернетом (ping google.com)..."
+print_status "Проверка соединения с интернетом (ping google.com)..."
 tput sgr0
      ping google.com -c1 2>&1 >> /dev/null
      if [ $? -eq 0 ]; then
-          tput setaf 2
-          echo "Соединение с интернетом установлено!"
-          tput sgr0
+          print_good "Соединение с интернетом установлено!"
      else
-          tput setaf 1
-          echo "При проверке связи не удалось обнаружить узел google.com. Пожалуйста проверьте соединение с интернетом или что исходящий ICMP разрешен."
-   	  tput sgr0
+          print_error "При проверке связи не удалось обнаружить узел google.com. Пожалуйста проверьте соединение с интернетом или что исходящий ICMP разрешен."
           exit 1
      fi
 
 #_______________________________________________________________________
 
-tput setaf 2
-echo "Проверка пользователя..."
-tput sgr0
-        if [ $(whoami) != "root" ]
-          then
-              tput setaf 1
-              echo "Скрипт должен быть запущен с sudo или root правами, иначе не будет работать."
-              tput sgr0
-  	exit 1
-          else
-               tput setaf 2
-               echo "Есть полные права."
-               tput sgr0
-     fi
-
-#_______________________________________________________________________
-
-tput setaf 2
-echo "Проверяем если sshd работает..."
-tput sgr0
+print_status "Проверяем если sshd работает..."
   if [ $(/bin/ps -ef |/bin/grep sshd |/usr/bin/wc -l) -gt 1 ]
 		then
-                        tput setaf 2
-			echo "sshd работает "
-                        tput sgr0
+			print_good "sshd работает."
 		else
-                        tput setaf 3
-	 		echo "sshd не работает. Установку можно продолжать, но часто sshd требуется для удаленной настройки и управления компьютером."
-                        tput sgr0
+	 		print_error "sshd не работает. Установку можно продолжать, но часто sshd требуется для удаленной настройки и управления компьютером."
 	fi
 
 #_______________________________________________________________________
 
-tput setaf 2
-echo  "Проверяем установку wget"
-tput sgr0
+print_status  "Проверяем установку wget"
+
 /usr/bin/which wget 2>&1 >> /dev/null
 		if [ $? -ne 0 ]; then
 
-        		echo "wget не найден. Установить wget?"
+        		print_notification "wget не найден. Установить wget?"
 
          case $wget_install in
                                 [yY] | [yY][Ee][Ss])
 				install_packages wget
                                 ;;
                                 *)
-                                tput setaf 1
-                                echo "Wget необходим для продолжения. Выход."
-                                tput sgr0
+                                print_error "Wget необходим для продолжения. Выход."
                                 exit 1
                                 ;;
                                 esac
 		else
-                        tput setaf 2
-        		echo "wget найден."
-                        tput sgr0
+        		print_error "wget найден."
 		fi
-#_______________________________________________________________________
-
-tput setaf 2
-echo "Запуск apt-get update и apt-get upgrade..."
-tput sgr0
-apt-get update && apt-get -y upgrade
-if [ $? -eq 0 ]; then
-  tput setaf 2
-  echo "Система полностью обновлена."
-  tput sgr0
-else
-  tput setaf 1
-  echo "Сбой при обновлении системы."
-  tput sgr0
-fi
 
 #_______________________________________________________________________
 
-#bash 00-ubuntu-base.sh
+bash ./BaseInstall/ubuntu-update.sh
 #bash 01-ubuntu-ssh.sh
 #bash 02-ubuntu-lamp.sh
 #bash 03-ubuntu-webmin.sh
