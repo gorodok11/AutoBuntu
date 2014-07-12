@@ -17,6 +17,14 @@ printf "deb $URL /\n" > /etc/apt/sources.list.d/bareos.list
 wget -q $URL/Release.key -O- | apt-key add -
 
 apt-get update
-apt-get -y install bareos bareos-database-mysql
+apt-get -y install bareos bareos-database-postgresql
 
 # Конфигурация
+su postgres -c /usr/lib/bareos/scripts/create_bareos_database
+su postgres -c /usr/lib/bareos/scripts/make_bareos_tables
+su postgres -c /usr/lib/bareos/scripts/grant_bareos_privileges
+# ...
+
+service bareos-dir start
+service bareos-sd start
+service bareos-fd start
