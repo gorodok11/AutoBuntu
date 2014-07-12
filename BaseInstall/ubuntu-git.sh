@@ -1,6 +1,8 @@
 #!/bin/bash
 # Многие открытые проекты будут установлены из Git
 
+. ./functions.sh
+
 # Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
    echo "Скрипт установки работает только под пользователем 'root'." 1>&2
@@ -8,4 +10,4 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 # Установка Git
-sudo apt-get -y install git
+run_command "Установка Git:" apt-get -y install git

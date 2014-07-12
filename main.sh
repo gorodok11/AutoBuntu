@@ -129,11 +129,7 @@ print_status  "Проверяем установку wget"
 
 #_______________________________________________________________________
 
-bash ./BaseInstall/ubuntu-update.sh
-bash ./BaseInstall/ubuntu-update.sh
-#bash 01-ubuntu-ssh.sh
-#bash 02-ubuntu-lamp.sh
-#bash 03-ubuntu-webmin.sh
-#bash 05-ubuntu-snort.sh
-#bash 06-ubuntu-ajenti.sh
-#bash 07-ubuntu-zentyal.sh
+./BaseInstall/ubuntu-update.sh
+./BaseInstall/ubuntu-ntp.sh
+./BaseInstall/ubuntu-git.sh
+./BaseInstall/ubuntu-webmin.sh
