@@ -29,3 +29,5 @@ export BACULA_SQL_PASS=baculaPass
 export BACULA_DIR="/MyBackup"
 # Пароль доступа к базе данных
 export BACULA_PASS=baculaPass
+# Папка для Bacula-web
+export BACULAWEB_DIR = "/var/www/bacula-web"
