@@ -10,9 +10,9 @@ fi
 tasksel -y install lamp-server
 
 # Установка phpMyAdmin
-apt-get -y install phpmyadmin apache2-utils
+apt-get -y install phpmyadmin apache2-utils > /dev/null 2>&1
 
 # Для входа в phpMyAdmin используйте адрес http://server_IP/phpmyadmin
 
-ufw allow 80
-ufw allow 443
+ufw allow 80 > /dev/null 2>&1
+ufw allow 443 > /dev/null 2>&1

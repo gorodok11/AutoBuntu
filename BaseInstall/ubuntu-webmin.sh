@@ -16,9 +16,9 @@ function install_webmin()
   apt-get -y install perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl libdigest-md5-perl
 
   touch /etc/apt/sources.list.d/webmin.list
-  echo "# Webmin" /etc/apt/sources.list.d/webmin.list
-  echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list.d/webmin.list
-  echo "deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib" >> /etc/apt/sources.list.d/webmin.list
+  echo "# Webmin
+    deb http://download.webmin.com/download/repository sarge contrib
+    deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib" > /etc/apt/sources.list.d/webmin.list
 
   wget http://www.webmin.com/jcameron-key.asc -O- | apt-key add -
   apt-get update
