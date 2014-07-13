@@ -49,7 +49,7 @@ echo "Это скрипт автоматической установки наб
 echo "Ubuntu Server 14.04"
 
 while true; do
-     read -p "Приступить к установке? (y/n)" warncheck
+     read -p "Приступить к установке? (Y/N):" warncheck
      case $warncheck in
           [Yy]* ) break;;
           [Nn]* ) echo "Отмена."; exit;;

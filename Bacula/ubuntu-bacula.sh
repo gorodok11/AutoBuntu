@@ -21,24 +21,24 @@ function bacula_install()
   chmod -R 755 /etc/bacula/
 }
 
+BACULAWEB_APP_DIR = "/var/www/bacula-web/application"
+
 function baculaweb_install()
 {
   # Установка WEB клиента bacula-web
   apt-get -y install libapache2-mod-php5 php5-mysql php5-gd
-  cd /var/www/
   wget http://www.bacula-web.org/files/bacula-web.org/downloads/bacula-web-6.0.0.tgz
-  tar -xzf bacula-web-6.0.0.tgz -C /var/www/
+  tar -xzf bacula-web-6.0.0.tgz
   rm -rf bacula-web-6.0.0.tgz
-  mv -v /var/www/bacula-web-6.0.0 /var/www/bacula-web
+  mv -v bacula-web-6.0.0 /var/www/bacula-web
   chown -Rv www-data:www-data /var/www/bacula-web
   chmod -Rv u=rx,g=rx,o=rx /var/www/bacula-web
   chmod -Rv u=rx,g=rx,o=rx /var/www/bacula-web
-  chmod 700 /var/www/bacula-web/application/view/cache
+  chmod 700 "${BACULAWEB_APP_DIR}/view/cache"
 
   # Настройка Bacula-web
-  BACULAWEB_CONFIG_DIR = "/var/www/bacula-web/application/config"
-  cp -v $BACULAWEB_CONFIG_DIR/config.php.sample $BACULAWEB_CONFIG_DIR/config.php
-  chown -v www-data:www-data $BACULAWEB_CONFIG_DIR/config.php
+  cp -v "${BACULAWEB_APP_DIR}/config/config.php.sample" "${BACULAWEB_APP_DIR}/config/config.php"
+  chown -v www-data:www-data "${BACULAWEB_APP_DIR}/config/config.php"
 }
 
 run_command "Установка Bacula:" bacula_install
