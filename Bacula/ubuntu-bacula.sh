@@ -14,11 +14,24 @@ function bacula_install()
 {
   apt-get -y install bacula-server bacula-client
   # Создание директорий для резервных копий
-  mkdir -p $BACULA_DIR/bacula/backup $BACULA_DIR/bacula/restore
+  mkdir -p $BACULA_BACK_DIR/bacula/backup $BACULA_BACK_DIR/bacula/restore
+  chown -R bacula:bacula $BACULA_BACK_DIR
+  chmod -R 700 $BACULA_BACK_DIR
   chown -R bacula:bacula $BACULA_DIR
-  chmod -R 700 $BACULA_DIR
-  chown -R bacula:bacula /etc/bacula/
-  chmod -R 755 /etc/bacula/
+  chmod -R 755 $BACULA_DIR
+}
+
+function bacula_config()
+{
+  cp -f "${BACULA_DIR}/bacula-dir.conf" "${BACULA_DIR}/bacula-dir.conf.original"
+  cp -f "${BACULA_DIR}/bacula-sd.conf"  "${BACULA_DIR}/bacula-sd.conf.original"
+  cp -f "${BACULA_DIR}/bacula-fd.conf"  "${BACULA_DIR}/bacula-fd.conf.original"
+  cp -f "${BACULA_DIR}/bconsole.conf"   "${BACULA_DIR}/bconsole.conf.original"
+
+  #Для просмотра сообщений Job output, нужно внести измнения в bacula-dir.conf
+  sed -i "s/catalog = all.*/catalog = all\, \!skipped\, \!saved/" $BACULA_DIR/bacula-dir.conf
+
+
 }
 
 function baculaweb_install()
@@ -31,7 +44,6 @@ function baculaweb_install()
   mv -v bacula-web-6.0.0 $BACULAWEB_DIR
   chown -Rv www-data:www-data $BACULAWEB_DIR
   chmod -Rv u=rx,g=rx,o=rx $BACULAWEB_DIR
-  chmod -Rv u=rx,g=rx,o=rx $BACULAWEB_DIR
   chmod 700 "${BACULAWEB_DIR}/application/view/cache"
 
   # Настройка Bacula-web
@@ -40,6 +52,7 @@ function baculaweb_install()
 }
 
 run_command "Установка Bacula:" bacula_install
+run_command "Настройка Bacula:" bacula_config
 run_command "Установка Bacula-WEB:" baculaweb_install
 
 # --> Доработать

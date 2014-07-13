@@ -109,3 +109,4 @@ print_status "Проверяем если sshd работает..."
 ./BaseInstall/ubuntu-git.sh
 ./BaseInstall/ubuntu-webmin.sh
 ./Bacula/ubuntu-bacula.sh
+./Bacula/ubuntu-webacula.sh

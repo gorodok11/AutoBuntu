@@ -20,14 +20,21 @@ export PG_HT_USER=PGadmin
 export PG_HT_PASS=PGPassword
 #_______________________________________________________________________
 # Пароль сервера mySQL для пользователя root
-export MYSQL__ROOT_PASS=mySqlPass
+export MYSQL_ROOT_PASS="mySqlPass"
 #_______________________________________________________________________
 # Настройки Bacula
 export BACULA_SQL_USER=bacula
-export BACULA_SQL_PASS=baculaPass
+export BACULA_SQL_PASS="baculaPass"
+# Папка Bacula
+export BACULA_DIR="/etc/bacula"
 # Папка для хранения резервных копий
-export BACULA_DIR="/MyBackup"
+export BACULA_BACK_DIR="/MyBackup"
 # Пароль доступа к базе данных
 export BACULA_PASS=baculaPass
 # Папка для Bacula-web
-export BACULAWEB_DIR = "/var/www/bacula-web"
+export BACULAWEB_DIR="/var/www/bacula-web"
+# Папка для Webacula
+export WEBACULA_DIR="/var/www/webacula"
+# Пароль для входа в WEB интерфейс Webacula
+export WEBACULA_PASS="webacula"
+#_______________________________________________________________________
