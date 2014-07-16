@@ -7,7 +7,13 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-apt-get -y install postgresql postgresql-contrib
+. ./functions.sh
+. ./credentials.sh
 
-read -p "Введите пароль пользователя 'postgres' для доступа к консоли: " PGPassword
-sudo -u postgres psql -d postgres -c "ALTER USER postgres WITH PASSWORD '$PGPassword';"
+function postgres_install()
+{
+  apt-get -y install postgresql postgresql-contrib postgresql-common openssl
+  sudo -u postgres psql -d postgres -c "ALTER USER postgres WITH PASSWORD '$PGSQL_ROOT_PASS';"
+}
+
+run_command "Установка PostgreSQL:" postgres_install

@@ -105,8 +105,16 @@ print_status "Проверяем если sshd работает..."
 #_______________________________________________________________________
 
 ./BaseInstall/ubuntu-update.sh
+./BaseInstall/ubuntu-base.sh
 ./BaseInstall/ubuntu-ntp.sh
+./BaseInstall/ubuntu-development.sh
 ./BaseInstall/ubuntu-git.sh
+./BaseInstall/ubuntu-lamp.sh
 ./BaseInstall/ubuntu-webmin.sh
+./PostgreSQL/ubuntu-postgresql.sh
+./PostgreSQL/ubuntu-phppgadmin.sh
 ./Bacula/ubuntu-bacula.sh
-./Bacula/ubuntu-webacula.sh
+
+
+#./Bacula/ubuntu-bacula.sh
+#./Bacula/ubuntu-webacula.sh

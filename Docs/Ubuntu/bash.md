@@ -18,3 +18,8 @@ echo $BASE_DIR
 ```
 . ./functions.sh
 ```
+### Как отправить письмо с вложением из командной строки?
+```
+apt-get install mutt
+mutt -s “Backup” -a /tmp/logs — webmaster@tutorialarena.com < ./msg
+```

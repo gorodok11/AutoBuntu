@@ -7,12 +7,15 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-tasksel -y install lamp-server
+. ./functions.sh
+. ./credentials.sh
+
+tasksel install lamp-server
 
 # Установка phpMyAdmin
-apt-get -y install phpmyadmin apache2-utils > /dev/null 2>&1
-
-# Для входа в phpMyAdmin используйте адрес http://server_IP/phpmyadmin
+run_command "Установка PHPMyAdmin:" apt-get -y install phpmyadmin apache2-utils
 
 ufw allow 80 > /dev/null 2>&1
 ufw allow 443 > /dev/null 2>&1
+
+echo "Для входа в phpMyAdmin используйте адрес http://$SRVR_HOST_NAME/phpmyadmin"

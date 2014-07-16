@@ -1,0 +1,6 @@
+#!/usr/bin/expect -f
+spawn ./pg_backup.sh
+expect "Password: "
+sleep 1
+send A!S@D#q4w5e6\r
+wait

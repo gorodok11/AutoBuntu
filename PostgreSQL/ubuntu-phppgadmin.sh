@@ -7,31 +7,39 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-apt-get -y install phppgadmin apache2-utils
+. ./functions.sh
+. ./credentials.sh
 
-# Настройка
-sed -i "s/^# allow from all/allow from all/" /etc/apache2/conf.d/phppgadmin
-mv /etc/apache2/conf.d/phppgadmin /etc/apache2/conf-enabled/phppgadmin.conf
+function pgadmin-install()
+{
+  apt-get -y install phppgadmin apache2-utils
 
-echo '
-<Directory /usr/share/phppgadmin>
+  # Настройка
+  sed -i "s/^# allow from all/allow from all/" /etc/apache2/conf.d/phppgadmin
+  mv /etc/apache2/conf.d/phppgadmin /etc/apache2/conf-enabled/phppgadmin.conf
+
+  echo '
+  <Directory /usr/share/phppgadmin>
         AuthUserFile /etc/phppgadmin/.htpasswd
         AuthName "Restricted Area"
         AuthType Basic
         require valid-user
-</Directory>
-' >> /etc/apache2/sites-enabled/phppgadmin.conf
+  </Directory>
+  ' >> /etc/apache2/sites-enabled/phppgadmin.conf
 
-echo "Нужно обезопасить доступ к WEB консоли phpPgAdmin"
-read -p "Введите имя пользователя для доступа к консоли: " PGAdminUser
-htpasswd -c /etc/phppgadmin/.htpasswd $PGAdminUser
+  chown -R www-data:www-data /usr/share/phppgadmin
+  chown -R www-data:www-data /etc/phppgadmin
 
-chown -R www-data:www-data /usr/share/phppgadmin
-chown -R www-data:www-data /etc/phppgadmin
-
-# Обход ошибки "Login disallowed for security reasons." в WEB консоли:
-# Дезактивируем extra_login_security в phppgadmin
-sed -i "/\$conf\['extra_login_security'\]/ s/=.*/= false;/" \
+  # Обход ошибки "Login disallowed for security reasons." в WEB консоли:
+  # Дезактивируем extra_login_security в phppgadmin
+  sed -i "/\$conf\['extra_login_security'\]/ s/=.*/= false;/" \
     /etc/phppgadmin/config.inc.php
 
-service apache2 restart
+  htpasswd -i -b -c /etc/phppgadmin/.htpasswd $PG_HT_USER $PG_HT_PASS
+
+  service apache2 restart
+}
+
+run_command "Установка PhpPgAdmin:" pgadmin-install
+
+echo "Для доступа к консоли зайдите по адресу http://$SRVR_HOST_NAME/phppgadmin"
