@@ -10,4 +10,4 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 # Установка программ для легкой работы в консоли
-run_command "Установка базового ПО." apt-get -y install htop mc aptitude zip unzip chkconfig subversion
+run_command "Установка базового ПО." apt-get -y install htop mc aptitude zip unzip subversion sysv-rc-conf

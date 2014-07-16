@@ -13,7 +13,7 @@ fi
 tasksel install lamp-server
 
 # Установка phpMyAdmin
-run_command "Установка PHPMyAdmin:" apt-get -y install phpmyadmin apache2-utils
+apt-get -y install phpmyadmin apache2-utils
 
 ufw allow 80 > /dev/null 2>&1
 ufw allow 443 > /dev/null 2>&1
