@@ -152,6 +152,8 @@ function baculaweb_install()
 
 }
 
+apt-get -y install postfix
+
 run_command "Установка Bacula:" bacula_install
 run_command "Настройка Bacula:" bacula_pg_config bacula_boot bacula_dir_configuration
 run_command "Установка Bacula-WEB:" baculaweb_install
