@@ -9,5 +9,10 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
+function base_install()
+{
+  apt-get -y install htop mc aptitude zip unzip subversion sysv-rc-conf debconf-utils
+}
+
 # Установка программ для легкой работы в консоли
-run_command "Установка базового ПО." apt-get -y install htop mc aptitude zip unzip subversion sysv-rc-conf
+run_command "Установка базового ПО:" base_install
