@@ -47,7 +47,7 @@ function phpmyadmin_install()
     echo "phpmyadmin phpmyadmin/mysql/app-pass password $MYSQL_ROOT_PASS" | debconf-set-selections
     echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | debconf-set-selections
     export DEBAN_FRNTEND=noninteractive
-    apt-get install - -f phpmyadmin
+    apt-get install -y -f phpmyadmin
   fi
 
   service apache2 restart
