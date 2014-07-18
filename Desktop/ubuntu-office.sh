@@ -27,4 +27,5 @@ function doublecmd_install()
 }
 
 run_command "Установка LibreOffice:" libreoffice_install
-run_command "Установка PDF принтера CUPS-PDF:"apt-get -y install cups-pdf
+run_command "Установка PDF принтера CUPS-PDF:" apt-get -y install cups-pdf
+run_command "Установка DoubleCMD:" doublecmd_install

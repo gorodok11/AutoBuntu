@@ -23,3 +23,20 @@ echo $BASE_DIR
 apt-get install mutt
 mutt -s “Backup” -a /tmp/logs — webmaster@tutorialarena.com < ./msg
 ```
+### Как закрасить лог файл в консоли?
+```
+#!/bin/bash
+
+LOG=/usr/local/e220/log/main.log
+
+tail -f ${LOG} | \
+sed -u -e 's/<>/\x1B\[31;1m<>\x1B\[37;0m/' | \
+sed -u -e 's/^[0-9:-]*/\x1B\[30;1m&\x1B\[37;0m/' | \
+sed -u -e 's/Created/\x1B\[34;1mCreated\x1B\[37;0m/' | \
+sed -u -e 's/Sent/\x1B\[34;1mSent\x1B\[37;0m/' | \
+sed -u -e 's/CRITICAL/\x1B\[31;1mCRITICAL\x1B\[37;0m/' | \
+sed -u -e 's/OK/\x1B\[32;1mOK\x1B\[37;0m/' | \
+sed -u -e 's/WARNING/\x1B\[33;1mWARNING\x1B\[37;0m/' | \
+sed -u -e 's/SOFT/\x1B\[32;1mSOFT\x1B\[37;0m/' | \
+sed -u -e 's/HARD/\x1B\[31;1mHARD\x1B\[37;0m/'
+```

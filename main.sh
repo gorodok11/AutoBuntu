@@ -4,6 +4,8 @@
 
 . $(cd $(dirname $0) && pwd)/functions.sh
 
+starttime=$(date +"%s")
+
 # Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
    echo "Скрипт установки работает только под пользователем 'root'." 1>&2
@@ -127,5 +129,12 @@ print_status "Проверяем если sshd работает..."
 # Эта строка должна быть последней так как требуется перезагрузка дважды подряд
 # Неизвестно почему X11RDP требует этого
 #./Desktop/ubuntu-xrdp.sh
+
+# do stuff in here
+
+endtime=$(date +%s)
+diff=$(($endtime-$starttime))
+echo "Затраченое время: $(($diff / 60))m$(($diff % 60))s"
+
 # Перезапускаем сервер
 #shutdown -r now

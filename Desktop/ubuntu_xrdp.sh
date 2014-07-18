@@ -44,16 +44,16 @@ cp -R -f -b /home/$SRVR_USER_NAME/Desktop/ /etc/skel/
 cp -R -f -b '/home/$SRVR_USER_NAME/Рабочий стол/' /etc/skel/
 
 # Решение проблемы с раскладкой клавиатуры в терминале:
-sed -i".bkp" '10i\if [ -r /etc/default/locale ]; then\
-. /etc/default/locale\
-export LANG LANGUAGE\
-fi\
-setxkbmap -layout "us,ru" -model "pc105" -option "grp:alt_shift_toggle,grp_led:scroll"' /etc/X11/Xsession
+#sed -i".bkp" '10i\if [ -r /etc/default/locale ]; then\
+#. /etc/default/locale\
+#export LANG LANGUAGE\
+#fi\
+#setxkbmap -layout "us,ru" -model "pc105" -option "grp:alt_shift_toggle,grp_led:scroll"' /etc/X11/Xsession
 
-sed -i".bkp" '2i\if [ -r /etc/default/locale ]; then\
-. /etc/default/locale\
-export LANG LANGUAGE\
-fi' /etc/xrdp/startwm.sh
+#sed -i".bkp" '2i\if [ -r /etc/default/locale ]; then\
+#. /etc/default/locale\
+#export LANG LANGUAGE\
+#fi' /etc/xrdp/startwm.sh
 
 # Если нужно более 10-и подключенных одновременно клиентов,
 # тогда увеличиваем значение записанное в опцию MaxSessions в секции
@@ -76,8 +76,6 @@ chown xrdp:xrdp /usr/share/doc/xrdp/rsakeys.ini
 # Группы прописываются в файле /etc/xrdp/sesman.ini под парметрами:
 # TerminalServerUsers=tsusers
 # TerminalServerAdmins=tsadmins
-
-
 
 echo "Теперь нужно перезагружать компьютер дважды."
 echo "Для этого наберите в терминале:"
