@@ -104,13 +104,28 @@ print_status "Проверяем если sshd работает..."
 	fi
 #_______________________________________________________________________
 
-#./BaseInstall/ubuntu-update.sh
+./BaseInstall/ubuntu-update.sh
 ./BaseInstall/ubuntu-base.sh
 ./BaseInstall/ubuntu-ntp.sh
 ./BaseInstall/ubuntu-development.sh
 ./BaseInstall/ubuntu-git.sh
 ./BaseInstall/ubuntu-lamp.sh
-#./BaseInstall/ubuntu-webmin.sh
-#./PostgreSQL/ubuntu-postgresql.sh
-#./PostgreSQL/ubuntu-phppgadmin.sh
+./WebServices/ubuntu-phpmyadmin.sh
+./WebServices/ubuntu-webmin.sh
+./WebServices/ubuntu-postfix.sh
+./PostgreSQL/ubuntu-postgresql.sh
+./WebServices/ubuntu-phppgadmin.sh
+./BaseInstall/ubuntu-nonfree.sh
+# Рабочий стол
+./Desktop/ubuntu-lxde.sh
+./Desktop/ubuntu-office.sh
+
+#./1C/1C_server_install.sh
+#./1C/1C_client_install.sh
+
 #./Bacula/ubuntu-bacula.sh
+# Эта строка должна быть последней так как требуется перезагрузка дважды подряд
+# Неизвестно почему X11RDP требует этого
+#./Desktop/ubuntu-xrdp.sh
+# Перезапускаем сервер
+#shutdown -r now

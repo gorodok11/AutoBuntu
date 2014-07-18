@@ -1,4 +1,5 @@
 #!/bin/bash
+# Установка системы резервного копирования Bacula
 
 # Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
@@ -151,8 +152,6 @@ function baculaweb_install()
   service apache2 restart
 
 }
-
-apt-get -y install postfix
 
 run_command "Установка Bacula:" bacula_install
 run_command "Настройка Bacula:" bacula_pg_config bacula_boot bacula_dir_configuration
