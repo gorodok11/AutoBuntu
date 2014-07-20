@@ -65,14 +65,14 @@ tput setaf 2
 print_status "Проверка версии ОС..."
 tput sgr0
      release=`lsb_release -r|awk '{print $2}'`
-     if [ $release = "14.04" -o $release = "14.10" ]
+     if [ $release = "12.04" -o $release = "14.04" ]
           then
                    tput setaf 2
   		   echo "Проверка ОС успешна."
                    tput sgr0
           else
                tput setaf 1
-               echo "Это не Ubuntu 14.04 или 14.10, скрипт не был протестирован на других платформах."
+               echo "Это не Ubuntu 12.04 или 14.04, скрипт не был протестирован на других платформах."
                tput sgr0
                while true; do
                    read -p "Продолжить? (y/n)" warncheck
@@ -110,7 +110,7 @@ print_status "Проверяем если sshd работает..."
 ./BaseInstall/ubuntu-base.sh
 ./BaseInstall/ubuntu-ntp.sh
 ./BaseInstall/ubuntu-development.sh
-./BaseInstall/ubuntu-git.sh
+#./BaseInstall/ubuntu-git.sh
 ./BaseInstall/ubuntu-lamp.sh
 ./WebServices/ubuntu-phpmyadmin.sh
 ./WebServices/ubuntu-webmin.sh
