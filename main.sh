@@ -115,8 +115,8 @@ print_status "Проверяем если sshd работает..."
 ./WebServices/ubuntu-phpmyadmin.sh
 ./WebServices/ubuntu-webmin.sh
 ./WebServices/ubuntu-postfix.sh
-./PostgreSQL/ubuntu-postgresql.sh
-./WebServices/ubuntu-phppgadmin.sh
+#./PostgreSQL/ubuntu-postgresql.sh
+#./WebServices/ubuntu-phppgadmin.sh
 ./BaseInstall/ubuntu-nonfree.sh
 # Рабочий стол
 ./Desktop/ubuntu-lxde.sh

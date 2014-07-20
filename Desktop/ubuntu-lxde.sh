@@ -31,4 +31,4 @@ function clean_programs()
 }
 
 run_command "Установка рабочего стола LXDE:" lubuntu_install
-run_command "Удаление ненужных програм:" clean_programs
+# run_command "Удаление ненужных програм:" clean_programs
