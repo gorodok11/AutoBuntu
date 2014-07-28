@@ -8,7 +8,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 # Установка зависимостей
-apt-get install libssl0.9.8 libossp-uuid16 libxslt1.1 libicu52 libt1-5 t1utils imagemagick unixodbc texlive-base libgfs-1.3-2
+apt-get -y install libssl0.9.8 libossp-uuid16 libxslt1.1 libicu52 libt1-5 t1utils imagemagick unixodbc texlive-base libgfs-1.3-2
 
 # Установка утилит для сборки пакетов из исходников
 # Если устанавливаем готовый пакет  PostgreSQL, пропускаем этот шаг

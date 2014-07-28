@@ -61,12 +61,12 @@ if [ -r /etc/default/locale ]; then\
 export LANG LANGUAGE\
 fi\
 ## Для корретной работы переключения раскладок клавиатуры по alt + shift\
-setxkbmap -layout "us,ru(winkeys)" -model "pc105" -option "grp:alt_shift_toggle,grp_led:scroll"' /etc/X11/Xsession
+setxkbmap -layout "us,ru" -model "pc105" -option "grp:alt_shift_toggle,grp_led:scroll' /etc/X11/Xsession
 
 # Здесь будет храниться скрипт переключения раскладок клавиатуры
 mkdir -p /home/X11rdp
 echo '#!/bin/bash\
-setxkbmap -layout "us,ru(winkeys)" -model "pc105" -option "grp:alt_shift_toggle,grp_led:scroll"' > /home/X11rdp/set-kb-layout.sh
+setxkbmap -layout "us,ru" -model "pc105" -option "grp:alt_shift_toggle,grp_led:scroll"' > /home/X11rdp/set-kb-layout.sh
 
 echo 'xterm –e /home/X11rdp/set-kb-layout.sh' >> /home/rootik/.config/lxsession/Lubuntu/autostart
 echo 'xterm –e /home/X11rdp/set-kb-layout.sh' >> /etc/xdg/lxsession/Lubuntu/autostart
@@ -76,6 +76,8 @@ chmod 755 /home/X11rdp/set-kb-layout.sh
 echo 'LANG=ru_RU.UTF-8' > /etc/default/locale
 echo 'LANGUAGE=ru:en' >> /etc/default/locale
 echo 'MDM_LANG=ru_RU.UTF-8' >> /etc/default/locale
+
+echo "mode:off" > /home/.xscreensaver
 
 
 # Если нужно более 10-и подключенных одновременно клиентов,
