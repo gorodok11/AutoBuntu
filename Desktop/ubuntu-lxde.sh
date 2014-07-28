@@ -11,7 +11,7 @@ fi
 
 function lubuntu_install()
 {
-  apt-get -y install --no-install-recommends lubuntu-desktop lxde-common 
+  apt-get -y install --no-install-recommends lubuntu-desktop lxde-common
   # Добавляем русскую клавиатуру
   sed -i 's:^XKBMODEL=.*:XKBMODEL="pc105":' /etc/default/keyboard
   sed -i 's:^XKBLAYOUT=.*:XKBLAYOUT="us,ru":' /etc/default/keyboard
@@ -25,7 +25,7 @@ function lubuntu_install()
 
 }
 
-function clean_programs()
+function lxde_utils()
 {
  apt-get -y --force-yes install bc cifs-utils coreutils cron cups cups-bsd cups-client curl dbus-x11 \
 expect findutils foomatic-db foomatic-db-engine gawk grep libc-bin login logrotate netcat openssl \
@@ -36,4 +36,4 @@ xfonts-base xkb-data zlib1g
 }
 
 run_command "Установка рабочего стола LXDE:" lubuntu_install
-# run_command "Удаление ненужных програм:" clean_programs
+run_command "Установка дополнительных пакетов рабочего стола:" lxde_utils
