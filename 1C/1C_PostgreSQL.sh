@@ -26,14 +26,16 @@ tar xvf postgresql_9_2_4_1_1C_amd64_deb_tar.bz2
 #tar xvf postgresql_9_2_4_1_1C_amd64_addon_deb_tar.bz2
 
 wget http://mirror.yandex.ru/ubuntu/pool/main/p/postgresql-common/postgresql-common_154_all.deb
+wget http://mirror.yandex.ru/ubuntu/pool/main/p/postgresql-common/postgresql-client-common_154_all.deb
 # (на момент написания статьи на сайте была доступна лишь версия для lucid,
 # которая ломает logrotate, поэтому этот пакет скачивал отдельно)!
 
 # Устанавливаем их именно в такой последовательности:
 dpkg -i libpq5_9.2.4-1.1C_amd64.deb
+dpkg -i postgresql-client-common_154_all.deb
 dpkg -i postgresql-client-9.2_9.2.4-1.1C_amd64.deb
 dpkg -i postgresql-common_154_all.deb
-dpkg -i postgresql-contrib-9.2_9.2.4-1.1C_amd64.deb
+dpkg --force-depends -i postgresql-contrib-9.2_9.2.4-1.1C_amd64.deb
 dpkg -i postgresql-9.2_9.2.4-1.1C_amd64.deb
 
 # Pin a specific version of PostgreSQL

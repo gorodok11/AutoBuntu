@@ -13,7 +13,12 @@ fi
 function postfix-install()
 {
 
-  echo 'postfix postfix/main_mailer_type select Internet Site' | debconf-set-selections
+# --> Доработать!
+
+  echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
+  echo postfix postfix/mailname string $(hostname -f) | debconf-set-selections
+# postfix postfix/mailname    string  /etc/mailname
+
   export DEBAN_FRONTEND=noninteractive
   apt-get -y install postfix
 

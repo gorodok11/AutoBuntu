@@ -110,7 +110,6 @@ print_status "Проверяем если sshd работает..."
 ./BaseInstall/ubuntu-base.sh
 ./BaseInstall/ubuntu-ntp.sh
 ./BaseInstall/ubuntu-development.sh
-#./BaseInstall/ubuntu-git.sh
 ./BaseInstall/ubuntu-lamp.sh
 ./WebServices/ubuntu-phpmyadmin.sh
 ./WebServices/ubuntu-webmin.sh

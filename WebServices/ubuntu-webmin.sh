@@ -30,3 +30,5 @@ function install_webmin()
 }
 
 run_command "Установка Webmin:" install_webmin
+
+echo "Для входа в phpMyAdmin используйте адрес https://${SRVR_HOST_NAME}:10000/"
