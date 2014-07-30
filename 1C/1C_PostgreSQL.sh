@@ -1,6 +1,12 @@
 #!/bin/bash
 # Установка PostgreSQL-1C
 
+# Качаем с сайта 1C необходимые пакеты Postgre 9.2.4 и ставим их в папку /opt/install/PostgreSQL
+# mkdir -p /opt/install/{PostgreSQL,1C}
+# Перед закачкой надо авторизироваться на сайте v8.users.1c.ru
+# Или скачайте с вашего файлообменника...
+# wget http://downloads.v8.1c.ru/get/Info/AddCompPostgre/9_2_4_1_1S/postgresql_9_2_4_1_1C_amd64_deb_tar.bz2
+
 # Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
    echo "Скрипт установки работает только под пользователем 'root'." 1>&2
@@ -29,16 +35,9 @@ export LANG="ru_RU.UTF-8"
 #apt-get -y install linux-headers-`uname -r` binutils pkg-config build-essential
 #apt-get -y install libreadline-dev zlib1g-dev
 
-# Качаем с сайта 1C необходимые пакеты Postgre 9.2.4
-mkdir -p /opt/install/{PostgreSQL,1C}
 cd /opt/install/PostgreSQL
-# Перед закачкой надо авторизироваться на сайте v8.users.1c.ru
-# Или скачайте с вашего файлообменника...
-wget http://downloads.v8.1c.ru/get/Info/AddCompPostgre/9_2_4_1_1S/postgresql_9_2_4_1_1C_amd64_deb_tar.bz2
-tar xvf postgresql_9_2_4_1_1C_amd64_deb_tar.bz2
 
 tar xvf postgresql_9_2_4_1_1C_amd64_deb_tar.bz2
-
 # Фикс на libicu-4.6
 # копируем postgresql-contrib-9.2_9.2.4-1.1C_amd64.deb в папку на сервере, входим в нее
 # Распаковываем пакет:
@@ -103,7 +102,8 @@ service postgresql restart
 
 # Проверяем есть ли пакет установки PostgreSQL
 if [ -f /opt/install/PostgreSQL/postgresql_9_2_4_1_1C_amd64_deb_tar.bz2 ]; then
-  run_command "Установка PostgreSQL:" postgres_install
+#  run_command "Установка PostgreSQL:" postgres_install
+  postgres_install
   print_status "Проверка работы сервера PostgreSQL:"
   service postgresql status
   netstat -atn|grep 5432
