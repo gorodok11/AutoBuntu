@@ -1,5 +1,5 @@
 #!/bin/bash
-# Файл содержит глобальные функции
+# Библиотека функций
 # Использование:
 # Добавить в начале скрипта
 # . $(cd $(dirname $0) && pwd)/functions.sh
@@ -43,11 +43,20 @@ install_packages()
 # Запуск команды
 # Использование:
 # run_command "Installing MySQL server" apt-get install -y mysql-server python-mysqldb
-function run_command()
+# run_command_q - запуск без вывода сообщений в консоль,
+# при обнаружении ошибки останавливается выполнение и выводится текст ошибки
+function run_command_q()
 {
 	echo -n "$1..."
         shift
         STDOUT=$($* 2>&1) && (echo -e "\x1B[01;32m[DONE]\x1B[0m") || (echo -e "\x1B[01;31m[ERROR]\x1B[0m"; echo $STDOUT; kill -9 $$)
+}
+
+function run_command()
+{
+  echo -n "$1..."
+    shift
+    STDOUT=$($*)
 }
 #_______________________________________________________________________
 # Распаковка архивов
