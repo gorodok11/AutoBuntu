@@ -20,8 +20,8 @@ export MYSQL_ROOT_PASS="mySqlPass"
 #_______________________________________________________________________
 # Пароль сервера PostgreSQL для пользователя postgres
 export PGSQL_ROOT_PASS="PostgrePass"
-export POSTGRE_HBA_CONF="/var/lib/postgresql/9.2/main/pg_hba.conf"
-export PGSQL_DATA_DIR="/var/lib/postgresql/9.2/main"
+export POSTGRE_HBA_CONF="/etc/postgresql/9.2/main/pg_hba.conf"
+export PGSQL_DATA_DIR="/etc/postgresql/9.2/main"
 #_______________________________________________________________________
 # Пользователь и пароль для доступа к консоли phpPgAdmin для PostgreSQL
 export PG_HT_USER="PGadmin"

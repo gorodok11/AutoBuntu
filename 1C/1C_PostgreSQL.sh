@@ -19,7 +19,7 @@ fi
 function postgres_install()
 {
 
-echo "postgresql-common postgresql-common/obsolete-major error" | debconf-set-selections
+echo "postgresql-common postgresql-common/obsolete-major boolean true" | debconf-set-selections
 # Установка зависимостей
 apt-get -y install  openssl libssl0.9.8 libossp-uuid16 ssl-cert libxslt1.1 libicu52 libt1-5 t1utils imagemagick unixodbc texlive-base libgfs-1.3-2 postgresql-common
 
