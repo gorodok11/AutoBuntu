@@ -19,12 +19,20 @@ fi
 function postgres_install()
 {
 
+echo "postgresql-common postgresql-common/obsolete-major error" | debconf-set-selections
 # Установка зависимостей
 apt-get -y install  openssl libssl0.9.8 libossp-uuid16 ssl-cert libxslt1.1 libicu52 libt1-5 t1utils imagemagick unixodbc texlive-base libgfs-1.3-2 postgresql-common
 
 # Увеличиваем максимальный размер сегмента памяти до 1Гб. Для менее мощных машин устанавливают от 64Мб до половины объема ОЗУ (для теста выделим 1Gb):
-echo "kernel.shmmax=1073741824" >>/etc/sysctl.conf
-echo "kernel.shmall=1073741824" >>/etc/sysctl.conf
+
+grep "kernel.shmmax=" /etc/sysctl.conf >/dev/null
+if [ $? -ne 0 ]; then
+  echo "kernel.shmmax=1073741824" >>/etc/sysctl.conf
+  echo "kernel.shmall=1073741824" >>/etc/sysctl.conf
+else
+
+fi
+
 sysctl -p
 
 locale-gen en_US ru_RU ru_RU.UTF-8
@@ -65,27 +73,9 @@ echo "postgresql-contrib-9.2" hold |  dpkg --set-selections
 # backslash_quote = on
 # escape_string_warning = off
 # standard_conforming_strings = off
-sed -i -e '/^#backslash_quote/ c\backslash_quote = on' /etc/postgresql/9.2/main/postgresql.conf
-sed -i -e '/^#escape_string_warning/ c\escape_string_warning = off' /etc/postgresql/9.2/main/postgresql.conf
-sed -i -e '/^#standard_conforming_strings/ c\standard_conforming_strings = off' /etc/postgresql/9.2/main/postgresql.conf
-
-service postgresql restart
-
-# Настройка сетевого экрана
-
-sudo -u postgres psql -d postgres -c "ALTER USER postgres WITH PASSWORD '$PGSQL_ROOT_PASS';"
-
-# Инициализация базы данных
-# По умолчанию база находится в папке /var/lib/postgresql/9.2/main
-# Для наших целей будем использовать папку /var/lib/pgsql/data
-mkdir -p $PGSQL_DATA_DIR
-chown postgres:postgres $PGSQL_DATA_DIR
-chmod 700 $PGSQL_DATA_DIR
-sudo -u postgres /usr/lib/postgresql/9.2/bin/initdb -D $PGSQL_DATA_DIR --locale=ru_RU.UTF-8
-
-# Если в конфиге postgres установлено использование ssl (по умолчанию это так):
-ln -s /etc/ssl/certs/ssl-cert-snakeoil.pem $PGSQL_DATA_DIR/server.crt
-ln -s /etc/ssl/private/ssl-cert-snakeoil.key $PGSQL_DATA_DIR/server.key
+sed -i -e '/^#backslash_quote/ c\backslash_quote = on' $PGSQL_DATA_DIR/postgresql.conf
+sed -i -e '/^#escape_string_warning/ c\escape_string_warning = off' $PGSQL_DATA_DIR/postgresql.conf
+sed -i -e '/^#standard_conforming_strings/ c\standard_conforming_strings = off' $PGSQL_DATA_DIR/postgresql.conf
 
 # Настройка доступа к базе данных по сети:
 # nano $PGSQL_DATA_DIR/pg_hba.conf
@@ -96,7 +86,28 @@ ln -s /etc/ssl/private/ssl-cert-snakeoil.key $PGSQL_DATA_DIR/server.key
 
 sed -i -e '/^host.*all.*all.*0.0.0.0\/0.*trust/c\\host\tall\t\tall\t\t0.0.0.0\/0\t\tmd5' $PGSQL_DATA_DIR/pg_hba.conf
 
+sudo -u postgres psql -d postgres -c "ALTER USER postgres WITH PASSWORD '$PGSQL_ROOT_PASS';"
+
 service postgresql restart
+
+# Настройка сетевого экрана
+
+
+
+# Инициализация базы данных в другой директории
+# По умолчанию база находится в папке /var/lib/postgresql/9.2/main
+# Чтобы использовать другую папку /var/lib/pgsql/data сделаем следующие шаги
+# export PGSQL_DATA_DIR="/var/lib/pgsql/data"
+#  mkdir -p $PGSQL_DATA_DIR
+#  hown postgres:postgres $PGSQL_DATA_DIR
+# chmod 700 $PGSQL_DATA_DIR
+# sudo -u postgres /usr/lib/postgresql/9.2/bin/initdb -D $PGSQL_DATA_DIR --locale=ru_RU.UTF-8
+
+# Если в конфиге postgres установлено использование ssl (по умолчанию это так):
+# ln -s /etc/ssl/certs/ssl-cert-snakeoil.pem $PGSQL_DATA_DIR/server.crt
+# ln -s /etc/ssl/private/ssl-cert-snakeoil.key $PGSQL_DATA_DIR/server.key
+# Настройка параметров $PGSQL_DATA_DIR/pg_hba.conf как указано выше
+# service postgresql restart
 
 }
 
@@ -110,6 +121,12 @@ if [ -f /opt/install/PostgreSQL/postgresql_9_2_4_1_1C_amd64_deb_tar.bz2 ]; then
   ps aux|grep 1c
 else
  print_error "Не найден пакет установки PostgreSQL в папке /opt/install/PostgreSQL/"
+fi
+
+if [ -f /opt/install/PostgreSQL/postgresql_9_2_4_1_1C_amd64_deb_tar.bz2 ]; then
+  echo 1
+else
+  echo 2
 fi
 
 # Для оптимизации конфига под конф. сервера есть утилита pg_tune
