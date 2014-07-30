@@ -5,6 +5,8 @@
 # mkdir -p /opt/install/{PostgreSQL,1C}
 # Перед закачкой надо авторизироваться на сайте v8.users.1c.ru
 # Или скачайте с вашего файлообменника...
+# Перед закачкой надо авторизироваться на сайте v8.users.1c.ru
+# cd /opt/install/PostgreSQL
 # wget http://downloads.v8.1c.ru/get/Info/AddCompPostgre/9_2_4_1_1S/postgresql_9_2_4_1_1C_amd64_deb_tar.bz2
 
 # Убедимся что находимся под рутом
@@ -24,13 +26,11 @@ echo "postgresql-common postgresql-common/obsolete-major boolean true" | debconf
 apt-get -y install  openssl libssl0.9.8 libossp-uuid16 ssl-cert libxslt1.1 libicu52 libt1-5 t1utils imagemagick unixodbc texlive-base libgfs-1.3-2 postgresql-common
 
 # Увеличиваем максимальный размер сегмента памяти до 1Гб. Для менее мощных машин устанавливают от 64Мб до половины объема ОЗУ (для теста выделим 1Gb):
-
 grep "kernel.shmmax=" /etc/sysctl.conf >/dev/null
 if [ $? -ne 0 ]; then
   echo "kernel.shmmax=1073741824" >>/etc/sysctl.conf
   echo "kernel.shmall=1073741824" >>/etc/sysctl.conf
 fi
-
 sysctl -p
 
 locale-gen en_US ru_RU ru_RU.UTF-8
@@ -90,7 +90,9 @@ service postgresql restart
 
 # Настройка сетевого экрана
 
-
+iptables -A INPUT -p tcp --dport 5432 -j ACCEPT
+iptables -A INPUT -p udp --dport 5432 -j ACCEPT
+service iptables save
 
 # Инициализация базы данных в другой директории
 # По умолчанию база находится в папке /var/lib/postgresql/9.2/main
@@ -121,11 +123,6 @@ else
  print_error "Не найден пакет установки PostgreSQL в папке /opt/install/PostgreSQL/"
 fi
 
-if [ -f /opt/install/PostgreSQL/postgresql_9_2_4_1_1C_amd64_deb_tar.bz2 ]; then
-  echo 1
-else
-  echo 2
-fi
 
 # Для оптимизации конфига под конф. сервера есть утилита pg_tune
 # Еще есть неплохая статья http://wiki.etersoft.ru/PostgreSQL/Optimum?v=xnq

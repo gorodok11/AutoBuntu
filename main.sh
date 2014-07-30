@@ -125,7 +125,7 @@ print_status "Проверяем если sshd работает..."
 #_______________________________________________________________________
 # Сервер 1С:Предприятие
 ./1C/1C_PostgreSQL.sh
-#./1C/1C_server_install.sh
+./1C/1C_server_install.sh
 #./1C/1C_client_install.sh
 
 #./Bacula/ubuntu-bacula.sh
