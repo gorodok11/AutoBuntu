@@ -21,10 +21,12 @@ export MYSQL_ROOT_PASS="mySqlPass"
 # Пароль сервера PostgreSQL для пользователя postgres
 export PGSQL_ROOT_PASS="PostgrePass"
 export POSTGRE_HBA_CONF="/etc/postgresql/9.3/main/pg_hba.conf"
+export PGSQL_DATA_DIR="/var/lib/pgsql/data"
 #_______________________________________________________________________
 # Пользователь и пароль для доступа к консоли phpPgAdmin для PostgreSQL
 export PG_HT_USER="PGadmin"
 export PG_HT_PASS="PGPassword"
+
 #_______________________________________________________________________
 # Настройки Bacula
 export BACULA_VERSION=7.0.4

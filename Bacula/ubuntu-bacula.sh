@@ -29,19 +29,20 @@ function bacula_pg_config()
   # Временно добавим пользователя postgres в группу root для создания базы Bacula
   usermod -a -G root postgres
   sudo adduser postgres sudo
+  # --> Доработать! У нас может быть уже установлен PostgreSQL другой версии!!!
   su - postgres -c /etc/bacula/create_postgresql_database
 	su - postgres -c /etc/bacula/make_postgresql_tables
 	su - postgres -c /etc/bacula/grant_postgresql_privileges
 
-  sed -i '/^local.*all.*all.*peer/a\\nlocal\tbacula\t\tbacula\t\t\t\t\ttrust' $POSTGRE_HBA_CONF
-  sed -i 's/local.*all.*all.*peer/#local\tall\tall\t\t\t\t\tpeer/g' $POSTGRE_HBA_CONF
+  sed -i '/^local.*all.*all.*peer/a\\nlocal\tbacula\t\tbacula\t\t\t\t\ttrust' $PGSQL_DATA_DIR/pg_hba.conf
+  sed -i 's/local.*all.*all.*peer/#local\tall\tall\t\t\t\t\tpeer/g' $PGSQL_DATA_DIR/pg_hba.conf
 
   service postgresql restart
 
   sed -i "s/dbname = \"bacula\"; dbuser = \"bacula\"; dbpassword = \"\"/dbname = \"bacula\"; dbuser = \"bacula\"; dbpassword = \"$BACULA_SQL_PASS\"/g" /etc/bacula/bacula-dir.conf
 	su - postgres -c "psql -U bacula -d bacula -c \"alter user bacula with password '$BACULA_SQL_PASS';\""
 
-	sed -i 's/local.*bacula.*bacula.*trust/local\tbacula\tbacula\t\t\t\t\tmd5/g' $POSTGRE_HBA_CONF
+	sed -i 's/local.*bacula.*bacula.*trust/local\tbacula\tbacula\t\t\t\t\tmd5/g' $PGSQL_DATA_DIR/pg_hba.conf
 
   service postgresql restart
   # Удаляем пользователя postgres из root группы

@@ -106,21 +106,25 @@ print_status "Проверяем если sshd работает..."
 	fi
 #_______________________________________________________________________
 
-./BaseInstall/ubuntu-update.sh
-./BaseInstall/ubuntu-base.sh
-./BaseInstall/ubuntu-ntp.sh
-./BaseInstall/ubuntu-development.sh
-./BaseInstall/ubuntu-lamp.sh
-./WebServices/ubuntu-phpmyadmin.sh
-./WebServices/ubuntu-webmin.sh
-./WebServices/ubuntu-postfix.sh
+#./BaseInstall/ubuntu-update.sh
+#./BaseInstall/ubuntu-base.sh
+#./BaseInstall/ubuntu-ntp.sh
+#./BaseInstall/ubuntu-development.sh
+#./BaseInstall/ubuntu-lamp.sh
+#./WebServices/ubuntu-phpmyadmin.sh
+#./WebServices/ubuntu-webmin.sh
+#./WebServices/ubuntu-postfix.sh
+#_______________________________________________________________________
 #./PostgreSQL/ubuntu-postgresql.sh
 #./WebServices/ubuntu-phppgadmin.sh
-./BaseInstall/ubuntu-nonfree.sh
+#_______________________________________________________________________
+#./BaseInstall/ubuntu-nonfree.sh
 # Рабочий стол
-./Desktop/ubuntu-lxde.sh
-./Desktop/ubuntu-office.sh
-
+#./Desktop/ubuntu-lxde.sh
+#./Desktop/ubuntu-office.sh
+#_______________________________________________________________________
+# Сервер 1С:Предприятие
+./1C/1C_PostgreSQL.sh
 #./1C/1C_server_install.sh
 #./1C/1C_client_install.sh
 

@@ -14,9 +14,7 @@ function 1C_server_install()
   # Установка дополнительных пакетов совместимости
   apt-get -y install imagemagick unixodbc libgsf-bin t1utils texlive-base
 
-  # Увеличиваем максимальный размер сегмента памяти до 1Гб. Для менее мощных машин устанавливают от 64Мб до половины объема ОЗУ (для теста выделим 1Gb):
-  echo "kernel.shmmax=1073741824" >>/etc/sysctl.conf
-  sysctl -p
+
   # Генерируем русскую локаль и задаем переменную среды LANG, именно с ней будет работать скрипт инициализации базы данных.
   locale-gen en_US ru_RU ru_RU.UTF-8
   export LANG="ru_RU.UTF-8"
@@ -25,7 +23,7 @@ function 1C_server_install()
   # Ссылку для скачивания ищем на сайте http://users.v8.1c.ru/
   # wget http://*.v8.1c.ru/.*./.*./.*./.*./deb64.tar.gz
   # Перед загрузкой нужно авторизироваться на сайте 1С
-  wget http://downloads.v8.1c.ru/get/Info/Platform/8_3_4_496/deb64.tar.gz
+  wget http://downloads.v8.1c.ru/get/Info/Platform/8_3_5_1088/deb64.tar.gz
 
   tar xvfz deb64.tar.gz
 
