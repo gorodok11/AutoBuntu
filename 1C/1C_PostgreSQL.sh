@@ -29,8 +29,6 @@ grep "kernel.shmmax=" /etc/sysctl.conf >/dev/null
 if [ $? -ne 0 ]; then
   echo "kernel.shmmax=1073741824" >>/etc/sysctl.conf
   echo "kernel.shmall=1073741824" >>/etc/sysctl.conf
-else
-
 fi
 
 sysctl -p
