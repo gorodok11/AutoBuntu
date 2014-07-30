@@ -33,6 +33,9 @@ if [ $? -ne 0 ]; then
 fi
 sysctl -p
 
+# Более полное описание параметров конфига постгреса например здесь:
+# http://wiki.etersoft.ru/PostgreSQL/Optimum
+
 locale-gen en_US ru_RU ru_RU.UTF-8
 export LANG="ru_RU.UTF-8"
 
@@ -76,7 +79,7 @@ sed -i -e '/^#escape_string_warning/ c\escape_string_warning = off' $PGSQL_DATA_
 sed -i -e '/^#standard_conforming_strings/ c\standard_conforming_strings = off' $PGSQL_DATA_DIR/postgresql.conf
 
 # Настройка доступа к базе данных по сети:
-# nano $PGSQL_DATA_DIR/pg_hba.conf
+# nano /etc/postgresql/9.2/main/pg_hba.conf
 # нужно изменить строки
 # hosts      all     all     0.0.0.0/0       trust
 # на
