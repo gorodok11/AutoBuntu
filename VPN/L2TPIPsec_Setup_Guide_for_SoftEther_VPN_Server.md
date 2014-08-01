@@ -9,9 +9,11 @@ The VPN Server configuration is very easy.
 ### Start VPN Server Manager
 
 Start SoftEther VPN Server Manager (which runs on Windows, but it can connect to remote SoftEther VPN Server running on Linux, Mac OS X or other UNIX). On the Server Manager, you can see the "L2TP/IPsec Setting" button. Click it.
-[![VPN Server Manager Main Window](https://www.softether.org/@api/deki/files/344/=01.png?size=webview)]
+[VPN Server Manager Main Window](https://www.softether.org/@api/deki/files/344/=01.png?size=webview)]
+
 The following screen will appear. Each IPsec Server Function can be turned on / off on this screen.
-[![IPsec / L2TP / EtherIP / L2TPv3 Settings Screen](https://www.softether.org/@api/deki/files/345/=02.png?size=webview]
+
+[IPsec / L2TP / EtherIP / L2TPv3 Settings Screen](https://www.softether.org/@api/deki/files/345/=02.png?size=webview]
 
 The meanings of each option are followings:
 
