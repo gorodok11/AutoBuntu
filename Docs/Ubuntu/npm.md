@@ -1,3 +1,5 @@
+Информация взята с сайта: http://habrahabr.ru/post/206678/
+
 # Шпаргалка по пакетному менеджеру NPM перевод
 
 [![Node.JS](http://habrastorage.org/getpro/habr/post_images/8b1/1e3/e2d/8b11e3e2d40972731edd00452f786b57.png)]
