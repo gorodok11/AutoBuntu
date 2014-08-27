@@ -12,7 +12,7 @@ apt-get -y install build-essential libreadline-dev libssl-dev libncurses5-dev zl
 mkdir -p /opt/install
 cd /opt/install
 # Вместо «make install» я пишу «checkinstall», дабы менеджер пакетов apt знал о новой программулине и мог потом ее корректно удалить (подробнее здесь).
-git clone https://github.com/unitlinux/SoftEtherVPN.git
+git clone https://github.com/SoftEtherVPN/SoftEtherVPN.git
 cd SoftEtherVPN
 ./configure
 make
