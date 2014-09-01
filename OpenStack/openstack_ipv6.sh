@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Make sure only root can run our script
+# Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
-   echo "You need to be 'root' dude." 1>&2
+   echo "Скрипт установки работает только под пользователем 'root'." 1>&2
    exit 1
 fi
 
@@ -53,7 +53,7 @@ ln -s /etc/init.d/ipv6-setup /etc/rc2.d/S10ipv6-setup
 
 # start radvd
 service radvd restart
- 
+
 # restart nova services
 for svc in api cert compute conductor network scheduler; do
   service nova-$svc restart

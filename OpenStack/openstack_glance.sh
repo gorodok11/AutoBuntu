@@ -17,15 +17,15 @@ managementip=$SG_SERVICE_CONTROLLER_IP
 apt-get install python-glanceclient -y
 apt-get install glance -y
 
-# edit glance api conf files 
+# edit glance api conf files
 if [ -f /etc/glance/glance-api.conf.orig ]
 then
    echo "#################################################################################################"
    echo;
    echo "Notice: I'm not changing config files again.  If you want to edit, they are in /etc/glance/"
-   echo; 
+   echo;
    echo "#################################################################################################"
-else 
+else
    # copy to backups before editing
    cp /etc/glance/glance-api.conf /etc/glance/glance-api.conf.orig
    cp /etc/glance/glance-registry.conf /etc/glance/glance-registry.conf.orig
@@ -68,7 +68,7 @@ flavor = keystone
    echo "#################################################################################################"
    echo;
    echo "Backups of configs for glance are in /etc/glance/"
-   echo; 
+   echo;
    echo "#################################################################################################"
 fi
 
@@ -83,15 +83,15 @@ sleep 3
 . ./setuprc
 
 # add cirros image
-glance image-create --name="Cirros 0.3.0"  --is-public=true --container-format=bare --disk-format=qcow2 --location=https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img
+glance image-create --name="Cirros 0.3.2"  --is-public=true --container-format=bare --disk-format=qcow2 --location=http://download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img
 
 # add ubuntu image
-glance image-create --name="Ubuntu Precise 12.04 LTS" --is-public=true --container-format=bare --disk-format=qcow2 --location=http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img
+glance image-create --name="Ubuntu Trusty 14.04.1 LTS" --is-public=true --container-format=bare --disk-format=qcow2 --location=http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
 
 echo;
 echo "##################################################################################################"
 echo;
-echo "Do a 'glance image-list' to see images.  You can now run './openstack_cinder.sh' to set up Cinder." 
+echo "Do a 'glance image-list' to see images.  You can now run './openstack_cinder.sh' to set up Cinder."
 echo;
 echo "##################################################################################################"
 echo;

@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# Make sure only root can run our script
+# Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
-   echo "You need to be 'root' dude." 1>&2
+   echo "Скрипт установки работает только под пользователем 'root'." 1>&2
    exit 1
 fi
 
 # bridge stuff
-apt-get install vlan qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils -y
+apt-get -y install vlan qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils
 
 # install time server
-apt-get install ntp -y
+apt-get -y install ntp
 service ntp restart
 
 # modify timeserver configuration
@@ -48,7 +48,9 @@ iface eth0 inet6 auto
 Now edit your /etc/hosts file to look like this:
 
 127.0.0.1	localhost
-30.0.1.100	IACloud
+10.0.1.100	VSP # HOST SERVER
+10.0.1.101	DBS # DATABASE SERVER
+10.0.1.102	TS  # TERMINAL SERVER
 
 Be sure to put each machine in the cluster's IP then name in the /etc/hosts file.
 

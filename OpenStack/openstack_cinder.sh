@@ -1,24 +1,24 @@
 #!/bin/bash
 
-# Make sure only root can run our script
+# Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
-   echo "You need to be 'root' dude." 1>&2
+   echo "Скрипт установки работает только под пользователем 'root'." 1>&2
    exit 1
 fi
 
 # source the setup file
 . ./setuprc
 
-clear 
+clear
 
-# some vars from the SG setup file getting locally reassigned 
-password=$SG_SERVICE_PASSWORD    
+# some vars from the SG setup file getting locally reassigned
+password=$SG_SERVICE_PASSWORD
 managementip=$SG_SERVICE_CONTROLLER_IP
 
 # install packages
 apt-get install -y lvm2
 apt-get install -y python-cinderclient
-apt-get install -y cinder-api cinder-scheduler cinder-volume 
+apt-get install -y cinder-api cinder-scheduler cinder-volume
 
 # edit keystone conf file to use templates and mysql
 if [ -f /etc/cinder/cinder.conf.orig ]; then

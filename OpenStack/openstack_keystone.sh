@@ -1,28 +1,28 @@
 #!/bin/bash
 # The end of this script is somewhat cobbled together from all sorts of places.  Thanks to those people, whoever you are.
 
-# Make sure only root can run our script
+# Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
-   echo "You need to be 'root' dude." 1>&2
+   echo "Скрипт установки работает только под пользователем 'root'." 1>&2
    exit 1
 fi
 
 # source the setup file
 . ./setuprc
 
-clear 
+clear
 
 # get keystone
 apt-get install keystone -y
 
-# some vars from the SG setup file getting locally reassigned 
+# some vars from the SG setup file getting locally reassigned
 password=$SG_SERVICE_PASSWORD
 email=$SG_SERVICE_EMAIL
 token=$SG_SERVICE_TOKEN
 region=$SG_SERVICE_REGION
 managementip=$SG_SERVICE_CONTROLLER_IP
 
-# set up env variables for various things - you'll need this later to run keystone and nova-manage commands 
+# set up env variables for various things - you'll need this later to run keystone and nova-manage commands
 # some of these variables are used by this script, so don't get confused if you seem them listed below again
 cat > stackrc <<EOF
 export OS_TENANT_NAME=admin
@@ -69,10 +69,10 @@ function get_id () {
 }
 
 # the following commands use an interesting pattern due to keystone's asinine way of doing asset association.
-# we run a keystone command through the get_id function (defined above) and then use the resulting md5 hash  
+# we run a keystone command through the get_id function (defined above) and then use the resulting md5 hash
 # to set a variable which we then use on the next command, effectively tying the two resources together inside
-# keystone.  later on we do this twice for each role.  why on earth keystone itself doesn't do this is anyone's 
-# guess. consider me disgruntled. Kord 
+# keystone.  later on we do this twice for each role.  why on earth keystone itself doesn't do this is anyone's
+# guess. consider me disgruntled. Kord
 
 # Users
 keystone user-create --name=admin --pass="$ADMIN_PASSWORD" --email=$email
@@ -91,7 +91,7 @@ STACKMONKEY_TENANT=$(get_id keystone tenant-create --name=stackmonkey)
 keystone user-role-add --user=admin --role=admin --tenant=admin
 keystone user-role-add --user=demo --role=_member_ --tenant=demo
 
-# keystone 
+# keystone
 KEYSTONE=$(get_id keystone service-create --name=keystone --type=identity --description=Identity )
 keystone endpoint-create --region=$KEYSTONE_REGION --service-id=$KEYSTONE --publicurl='http://'"$managementip"':5000/v2.0' --adminurl='http://'"$managementip"':35357/v2.0' --internalurl='http://'"$managementip"':5000/v2.0'
 

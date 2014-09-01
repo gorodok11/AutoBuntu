@@ -1,10 +1,12 @@
 #!/bin/bash
 
-# Make sure only root can run our script
+# Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
-   echo "You need to be 'root' dude." 1>&2
+   echo "Скрипт установки работает только под пользователем 'root'." 1>&2
    exit 1
 fi
+
+. ./functions.sh
 
 clear
 
@@ -30,7 +32,7 @@ echo "##########################################################################
 echo;
 
 # grab our IP
-read -p "Enter the device name for this rig's NIC (eth0, etc.) : " rignic
+read -p "Enter the device name for this rig's NIC (eth0, em1, etc.) : " rignic
 
 rigip=$(/sbin/ifconfig $rignic| sed -n 's/.*inet *addr:\([0-9\.]*\).*/\1/p')
 
@@ -83,7 +85,7 @@ EOF
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
 		echo;
-		echo "The following URL will be used for configuring the other rigs in this cluster.  Copy it."
+		echo "Следующий URL-адрес будет использоваться для настройки других установок в этом кластере. Копируйте его."
 		echo;
 		cat setuprc | curl -F 'geek=<-' https://sgsprunge.appspot.com
 
@@ -96,7 +98,7 @@ EOF
 
 else
 	echo;
-	read -p "Enter the URL given to you from the controller setup: " sprungeurl
+	read -p "Введите адрес, полученный при настройке контроллера: " sprungeurl
 	curl $sprungeurl > setuprc
 
 # don't unindent!

@@ -10,10 +10,10 @@ fi
 . ./functions.sh
 . ./credentials.sh
 
+
 function bacula_install()
 {
   apt-get -y install build-essential gcc make libpq-dev subversion
-cd bacula-7.0.4
   wget http://netcologne.dl.sourceforge.net/project/bacula/bacula/$BACULA_VERSION/bacula-$BACULA_VERSION.tar.gz
   tar -zxf bacula-$BACULA_VERSION.tar.gz
   cd bacula-$BACULA_VERSION
@@ -72,9 +72,9 @@ function bacula_dir_configuration()
 			return 0
 			echo "Возможно файл /etc/bacula/bacula-dir.conf изменен."
 		fi
-    cp -f /etc/bacula/bacula-dir.conf.backup /etc/bacula/bacula-dir.conf.backup
-    cp /etc/bacula/bacula-sd.conf /etc/bacula/bacula-sd.conf.backup
-    cp /etc/bacula/bconsole.conf /etc/bacula/bconsole.conf.backup
+    cp -f /etc/bacula/bacula-dir.conf /etc/bacula/bacula-dir.conf.backup
+    cp -f /etc/bacula/bacula-sd.conf /etc/bacula/bacula-sd.conf.backup
+    cp -f /etc/bacula/bconsole.conf /etc/bacula/bconsole.conf.backup
 		sed -n 166,176p /etc/bacula/bacula-dir.conf > /etc/bacula/clients.conf
     sed -n '99,105p;120,121p;127,137p;155,165p' /etc/bacula/bacula-dir.conf > /etc/bacula/filesets.conf
     sed -n '26,39p;66,96p' /etc/bacula/bacula-dir.conf > /etc/bacula/jobs.conf

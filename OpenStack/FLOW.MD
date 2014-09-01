@@ -1,0 +1,4 @@
+openstack_networking.sh
+openstack_server_test.sh
+openstack_system_update.sh
+openstack_setup.sh

@@ -12,7 +12,7 @@ fi
 clear
 
 # grab our IP
-read -p "Enter the device name for this rig's NIC (eth0, etc.) : " rignic
+read -p "Enter the device name for this rig's NIC (eth0, em1, etc.) : " rignic
 rigip=$(/sbin/ifconfig $rignic| sed -n 's/.*inet *addr:\([0-9\.]*\).*/\1/p')
 
 # some vars from the SG setup file getting locally reassigned

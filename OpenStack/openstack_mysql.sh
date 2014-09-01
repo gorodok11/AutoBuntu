@@ -1,10 +1,12 @@
 #!/bin/bash
 
-# Make sure only root can run our script
+# Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
-   echo "You need to be 'root' dude." 1>&2
+   echo "Скрипт установки работает только под пользователем 'root'." 1>&2
    exit 1
 fi
+
+. ./functions.sh
 
 . ./setuprc
 
@@ -40,7 +42,7 @@ character-set-server = utf8
 service mysql restart
 
 # wait for restart
-sleep 4 
+sleep 4
 
 # secure mysql
 mysql_secure_installation

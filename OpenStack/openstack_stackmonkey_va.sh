@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Make sure only root can run our script
+# Убедимся что находимся под рутом
 if [ "$(id -u)" != "0" ]; then
-   echo "You need to be 'root' dude." 1>&2
+   echo "Скрипт установки работает только под пользователем 'root'." 1>&2
    exit 1
 fi
 
@@ -15,7 +15,7 @@ This script has already been run.  If you want to launch a new StackMonkey VA, e
 on the command line:
 
   . ./stackmonkeyrc
-  nova boot --poll --key_name stackmonkey --user-data postcreation.sh --flavor 1 --image 'Ubuntu Precise 12.04 LTS' 'StackMonkey VA'
+  nova boot --poll --key_name stackmonkey --user-data postcreation.sh --flavor 1 --image 'Ubuntu Trusty 14.04.1 LTS' 'StackMonkey VA'
   nova list
 
 ####################################################################################################
@@ -67,7 +67,7 @@ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
 nova-manage instance_type create va.xovo 512 1 8
 
 # boot va with key, post boot data, flavor, image, instance name
-nova boot --poll --key_name stackmonkey --user-data postcreation.sh --flavor va.xovio --image "Ubuntu Precise 12.04 LTS" "StackMonkey VA"
+nova boot --poll --key_name stackmonkey --user-data postcreation.sh --flavor va.xovio --image "Ubuntu Trusty 14.04.1 LTS" "StackMonkey VA"
 
 # grab the IP address for display to the user
 APPLIANCE_IP=`nova list | grep "private*=[^=]" | cut -d= -f2 | cut -d, -f1`
