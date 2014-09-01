@@ -59,11 +59,11 @@ nova keypair-add --pub_key stackmonkey-id.pub stackmonkey
 nova secgroup-create appliance "Appliance security group."
 nova secgroup-add-rule appliance tcp 80 80 0.0.0.0/0
 nova secgroup-add-rule appliance tcp 22 22 0.0.0.0/0
-nova secgroup-add-rule appliance icmp -1 -1 0.0.0.0/0 
+nova secgroup-add-rule appliance icmp -1 -1 0.0.0.0/0
 # configure default security group to allow all tcp and udp ports to instances, plus pings
 nova secgroup-add-rule default tcp 1 65535 0.0.0.0/0
 nova secgroup-add-rule default udp 1 65535 0.0.0.0/0
-nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0 
+nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
 
 # create a new flavor for the va w/ 8GB drive space
 nova-manage flavor create m512.v1.d8 512 1 8
@@ -82,9 +82,9 @@ APPLIANCE_IP=`nova list | grep "private*=[^=]" | cut -d= -f2 | cut -d, -f1`
 # instruction bonanza
 echo "#####################################################################################################
 
-The StackMonkey appliance will take about 10 minutes to build.  
+The StackMonkey appliance will take about 10 minutes to build.
 
-A private key called 'stackmonkey.pem' has been created and placed in this directory.  You will be 
+A private key called 'stackmonkey.pem' has been created and placed in this directory.  You will be
 able to use this key to ssh into the appliance.  Copy it somwhere safe and then use it like this:
 
     ssh -i stackmonkey.pem ubuntu@$APPLIANCE_IP

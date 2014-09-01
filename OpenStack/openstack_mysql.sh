@@ -6,8 +6,6 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-
-
 . ./setuprc
 
 # throw in a few other services we need installed
