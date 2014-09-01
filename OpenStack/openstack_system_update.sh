@@ -6,7 +6,6 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-. ./functions.sh
 
 apt-get update -y
 apt-get install curl -y

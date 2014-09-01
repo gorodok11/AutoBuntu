@@ -6,8 +6,6 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-. ./functions.sh
-
 
 # install and run kvm-ok to see if we have virt capabilities
 apt-get -y install cpu-checker

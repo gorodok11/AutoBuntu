@@ -8,8 +8,8 @@ fi
 
 # restart nova
 service nova-api restart
+service nova-api-metadata restart
 service nova-cert restart
-service nova-api restart
 service nova-conductor restart
 service nova-consoleauth restart
 service nova-network restart

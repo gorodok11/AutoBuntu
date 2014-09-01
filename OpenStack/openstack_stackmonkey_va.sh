@@ -45,47 +45,55 @@ function get_id () {
     echo `$@ | awk '/ id / { print $4 }'`
 }
 
-# create stackmonkey project, user and roles
-STACKMONKEY_TENANT=$(get_id keystone tenant-create --name=stackmonkey)
-STACKMONKEY_USER=$(get_id keystone user-create --name=stackmonkey --pass="$monkeypass" --email=$SG_SERVICE_EMAIL)
-STACKMONKEY_ROLE=$(get_id keystone role-create --name=monkey)
-keystone user-role-add --user-id $STACKMONKEY_USER --role-id $STACKMONKEY_ROLE --tenant-id $STACKMONKEY_TENANT
+# project, user, roles for stackmonkey
+keystone tenant-create --name=stackmonkey
+keystone user-create --name=stackmonkey --pass="$monkeypass" --email=$SG_SERVICE_EMAIL
+keystone user-role-add --user=stackmonkey --role=admin --tenant=stackmonkey
 
-# the following steps are run using the admin user and tenant
-# instance managment of the virtual appliance is done in horizon using the admin user/pass
-
+# source configuration for the new user
+. ./stackmonkeyrc
 # create and add keypairs
 ssh-keygen -f stackmonkey-id -N ""
 nova keypair-add --pub_key stackmonkey-id.pub stackmonkey
-
-# configure default security group to allow port 80 and 22, plus pings
-nova secgroup-add-rule default tcp 80 80 0.0.0.0/0
-nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
-nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
+# configure the appliance security group
+nova secgroup-create appliance "Appliance security group."
+nova secgroup-add-rule appliance tcp 80 80 0.0.0.0/0
+nova secgroup-add-rule appliance tcp 22 22 0.0.0.0/0
+nova secgroup-add-rule appliance icmp -1 -1 0.0.0.0/0 
+# configure default security group to allow all tcp and udp ports to instances, plus pings
+nova secgroup-add-rule default tcp 1 65535 0.0.0.0/0
+nova secgroup-add-rule default udp 1 65535 0.0.0.0/0
+nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0 
 
 # create a new flavor for the va w/ 8GB drive space
-nova-manage instance_type create va.xovo 512 1 8
+nova-manage flavor create m512.v1.d8 512 1 8
+
+# create an image to use to boot the appliance (Ubuntu 14.04LTS)
+glance image-create --name="Ubuntu Trusty 14.04.1 LTS" --is-public=true --container-format=bare --disk-format=qcow2 --location=https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+
 
 # boot va with key, post boot data, flavor, image, instance name
-nova boot --poll --key_name stackmonkey --user-data postcreation.sh --flavor va.xovio --image "Ubuntu Trusty 14.04.1 LTS" "StackMonkey VA"
+nova boot --poll --key_name stackmonkey --user-data postcreation.sh --security-groups appliance --flavor m512.v1.d8 --image "Ubuntu Trusty 14.04.1 LTS" "StackMonkey VA"
 
 # grab the IP address for display to the user
 APPLIANCE_IP=`nova list | grep "private*=[^=]" | cut -d= -f2 | cut -d, -f1`
 
-# source the stackmonkeyrc file for user/pass
-. ./stackmonkeyrc
 
 # instruction bonanza
 echo "#####################################################################################################
 
-The StackMonkey appliance is being built and a private key called 'stackmonkey.pem' has been created.
+The StackMonkey appliance will take about 10 minutes to build.  
 
-The username/password for the OpenStack Horizon account is $OS_USERNAME/$OS_PASSWORD.
+A private key called 'stackmonkey.pem' has been created and placed in this directory.  You will be 
+able to use this key to ssh into the appliance.  Copy it somwhere safe and then use it like this:
 
-Log into your OpenStack cluster with this user/pass to download your credentials file to your local
-machine.  You will need to upload this file when you configure the appliance.
+    ssh -i stackmonkey.pem ubuntu@$APPLIANCE_IP
 
-You may now configure the appliance at: http://$APPLIANCE_IP/
+A new OpenStack account has been created: $OS_USERNAME/$OS_PASSWORD.  Use this account to login and
+download the API credentials file to your local machine.  You will need to upload this file to the
+appliance once it is done building.
+
+Use a web browser to see if the appliance is ready: http://$APPLIANCE_IP/
 
 #####################################################################################################
 "

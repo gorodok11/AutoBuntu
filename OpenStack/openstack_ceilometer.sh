@@ -15,22 +15,17 @@ clear
 apt-get install ceilometer-api ceilometer-collector ceilometer-agent-central -y
 apt-get install ceilometer-agent-notification ceilometer-alarm-evaluator ceilometer-alarm-notifier -y
 apt-get install python-ceilometerclient -y
+apt-get install mongodb-server
 
-# Install MongoDB
-
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
-apt-get update
-apt-get install mongodb-org -y
 
 # patch mongo config
 sed -e "
 /^bind_ip =.*$/s/^.*$/bind_ip = $managementip/
 /^connection=.*$/s/^.*$/connection = mongodb://ceilometer:$password@$managementip:27017/ceilometer/
-" -i /etc/mongod.conf
+" -i /etc/mongodb.conf
 
 # restart mongo
-service mongod restart
+service mongodb restart
 
 # create database
 mongo --host $managementip --eval '

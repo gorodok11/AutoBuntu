@@ -37,9 +37,9 @@ iface lo inet6 loopback
 # primary interface
 auto eth0
 iface eth0 inet static
-  address 30.0.1.100
+  address 10.0.1.100
   netmask 255.255.255.0
-  gateway 30.0.1.1
+  gateway 10.0.1.1
   dns-nameservers 8.8.8.8
 
 # ipv6 configuration

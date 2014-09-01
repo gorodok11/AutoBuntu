@@ -22,7 +22,7 @@ computeip=$SG_SERVICE_COMPUTE_IP
 computenic=$SG_SERVICE_COMPUTE_NIC
 
 # install packages
-apt-get install -y nova-compute nova-network
+apt-get install -y nova-compute
 
 # hack up the nova paste file
 sed -e "
@@ -42,16 +42,15 @@ echo "
 [DEFAULT]
 
 # LOGS
-verbose=true
-debug=false
+verbose=True
+debug=False
 logdir=/var/log/nova
 
 # STATE
 auth_strategy=keystone
-use_deprecated_auth=false
 state_path=/var/lib/nova
 lock_path=/run/lock/nova
-
+rootwrap_config=/etc/nova/rootwrap.conf
 # PASTE FILE
 api_paste_config=/etc/nova/api-paste.ini
 
@@ -66,18 +65,18 @@ rabbit_password=guest
 compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
 
 # NETWORK
-network_manager=nova.network.manager.FlatDHCPManager
-force_dhcp_release=True
-dhcpbridge_flagfile=/etc/nova/nova.conf
-dhcpbridge=/usr/bin/nova-dhcpbridge
-firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
-my_ip=$computeip
-public_interface=br100
-vlan_interface=$computenic
-flat_network_bridge=br100
-flat_interface=$computenic
-dnsmasq_config_file=/etc/nova/dnsmasq-nova.conf
-enable_ipv6=False
+# network_manager=nova.network.manager.FlatDHCPManager
+# force_dhcp_release=True
+# dhcpbridge_flagfile=/etc/nova/nova.conf
+# dhcpbridge=/usr/bin/nova-dhcpbridge
+# firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
+# my_ip=$computeip
+# public_interface=br100
+# vlan_interface=$computenic
+# flat_network_bridge=br100
+# flat_interface=$computenic
+# dnsmasq_config_file=/etc/nova/dnsmasq-nova.conf
+# enable_ipv6=False
 
 # GLANCE
 image_service=nova.image.glance.GlanceImageService

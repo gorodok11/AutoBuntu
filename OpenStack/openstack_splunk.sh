@@ -66,4 +66,10 @@ followTail = 0
 # start splunk
 /opt/splunk/bin/splunk start --accept-license
 
-/opt/splunk/bin/splunk enable boot-start
+echo;
+echo "##########################################################################################"
+echo;
+echo "Splunk setup complete.  Continue the setup by doing a './openstack_mysql.sh'."
+echo;
+echo "##########################################################################################"
+echo;
