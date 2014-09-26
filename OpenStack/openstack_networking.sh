@@ -6,14 +6,18 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-# bridge stuff
-apt-get -y install vlan qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils
+. ./functions.sh
 
-# install time server
-apt-get -y install ntp
-service ntp restart
+function network_install()
+{
+  # bridge stuff
+  apt-get -y install vlan qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils
 
-# modify timeserver configuration
+  # install time server
+  apt-get -y install ntp
+  service ntp restart
+
+  # modify timeserver configuration
 sed -e "
 /^server ntp.ubuntu.com/i server 127.127.1.0
 /^server ntp.ubuntu.com/i fudge 127.127.1.0 stratum 10
@@ -24,10 +28,14 @@ sed -e "
 echo 1 > /proc/sys/net/ipv4/ip_forward
 sysctl net.ipv4.ip_forward=1
 
+}
+
+run_command "Установка сетевого моста и сервера времени:" network_install
+
 echo;
 echo "##############################################################################################################
 
-Go and edit your /etc/network/interfaces file to look something like this:
+Редактируйте файл /etc/network/interfaces как в следующем примере:
 
 # loopback
 auto lo
@@ -45,19 +53,19 @@ iface eth0 inet static
 # ipv6 configuration
 iface eth0 inet6 auto
 
-Now edit your /etc/hosts file to look like this:
+Тепери редактируйте файл /etc/hosts как в следующем примере:
 
 127.0.0.1	localhost
 10.0.1.100	VSP # HOST SERVER
 10.0.1.101	DBS # DATABASE SERVER
 10.0.1.102	TS  # TERMINAL SERVER
 
-Be sure to put each machine in the cluster's IP then name in the /etc/hosts file.
+Убедитесь что все IP адреса машин из кластера записаны в /etc/hosts .
 
-After you are done, do a 'ifdown --exclude=lo -a && sudo ifup --exclude=lo -a'.
+После этого перезагружайте сеть командой 'sudo ifdown --exclude=lo -a && sudo ifup --exclude=lo -a'.
 
 To start the virtualization test, run './openstack_server_test.sh'
 
 ###############################################################################################################"
 
-exit
+ifdown --exclude=lo -a && ifup --exclude=lo -a

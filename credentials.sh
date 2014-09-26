@@ -9,6 +9,8 @@ fi
 
 # Директория установочного скрипта
 export ROOT_PATH=$(dirname $(readlink -f $0))
+export TOP_DIR=$(cd $(dirname "$0") && pwd)
+
 #_______________________________________________________________________
 # Имя сервера
 export SRVR_HOST_NAME=Ubuntu
