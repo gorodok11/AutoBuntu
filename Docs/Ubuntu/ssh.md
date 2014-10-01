@@ -32,7 +32,7 @@ ssh-keygen -t rsa
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/user/.ssh/id_rsa):
 ```
-Тут и далее, будем считать что в данном примере я ввел melfis.ru-rsa
+Тут и далее, будем считать что в данном примере я ввел user.ru-rsa
 Теперь система попросит ввести пароль для сертификата, я ввожу пароль.
 ```
 Enter passphrase (empty for no passphrase):
@@ -40,7 +40,7 @@ Enter same passphrase again:
 ```
 Сертификаты сгенерированы:
 ```
-Your identification has been saved in melfis.ru-rsa.
+Your identification has been saved in user.ru-rsa.
 Your public key has been saved in user.ru-rsa.pub.
 The key fingerprint is:
 23:3f:f4:5c:c4:48:6b:37:4c:ca:f5:24:29:63:e7:ae user@NAT-SERVER
@@ -66,7 +66,7 @@ user.ru-rsa.pub
 Теперь Вам необходимо установить на Ваш сервер сгенерированный ключ. (Да, мы находимся все еще на сервере где установлен Spen-SSH). По мимо установки ключа, мы сразу выставим права на хранилище ключей.
 Выполним следующие команды:
 ```
-at user.ru-rsa.pub >> ~/.ssh/authorized_keys
+cat user.ru-rsa.pub >> ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 ```
 Теперь перейдем на компьютер, который должен быть авторизирован на ssh сервере по ключу. (Теперь мы работаем на Вашем локальном компьютере.)
