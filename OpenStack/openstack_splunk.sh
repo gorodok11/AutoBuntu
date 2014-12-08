@@ -21,12 +21,9 @@ http://$SG_SERVICE_CONTROLLER_IP:8000/
 echo;
 
 # download
-wget -O splunk-6.1.3-220630-Linux-x86_64.tgz 'http://www.splunk.com/page/download_track?file=6.1.3/splunk/linux/splunk-6.1.3-220630-Linux-x86_64.tgz&ac=&wget=true&name=wget&platform=Linux&architecture=x86_64&version=6.1.3&product=splunk&typed=release'
-
+wget -O splunk-6.2.0-237341-linux-2.6-amd64.deb 'http://www.splunk.com/page/download_track?file=6.2.0/splunk/linux/splunk-6.2.0-237341-linux-2.6-amd64.deb&ac=test_modal_enterprise&wget=true&name=wget&platform=Linux&architecture=x86_64&version=6.2.0&product=splunk&typed=release'
 # extract, move, cleanup
-tar xvfz splunk-6.1.3-220630-Linux-x86_64.tgz
-mv splunk /opt/splunk
-rm splunk-6.1.3-220630-Linux-x86_64.tgz
+dpkg -i splunk-6.2.0-237341-linux-2.6-amd64.deb
 
 # whack on inputs.conf file
 echo "

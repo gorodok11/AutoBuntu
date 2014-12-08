@@ -19,7 +19,7 @@ The scripts in this directory use a flag for determining install flow.  If the u
     ./openstack_horizon.sh
 
     nova-manage network create private --fixed_range_v4=10.0.47.0/24 --fixed_range_v6=2601:9:1380:821::/64 --num_networks=1 --bridge=br100 --bridge_interface=eth0 --network_size=255
-    nova-manage network create private --fixed_range_v4=10.0.47.0/24 --fixed_range_v6=2601:9:1380:821::/64 --num_networks=1 --bridge=br100 --bridge_interface=em1 --network_size=255
+    nova-manage network create private --fixed_range_v4=10.0.47.0/24 --fixed_range_v6=2601:9:1380:821::/64 --num_networks=1 --bridge=br100 --bridge_interface=em2 --network_size=255
 
 ```
 If the user is installing a compute node, the flow goes like this:
