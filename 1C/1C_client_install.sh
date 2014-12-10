@@ -11,7 +11,8 @@ fi
 
 function 1C_client_install()
 {
-  # Установка дополнительных пакетов совместимостиget -y install imagemagick unixodbc libgsf-bin t1utils texlive-base
+  # Установка дополнительных пакетов совместимости
+  apt-get -y install imagemagick unixodbc libgsf-bin t1utils texlive-base
 
   # Генерируем русскую локаль и задаем переменную среды LANG, именно с ней будет работать скрипт инициализации базы данных.
   locale-gen en_US ru_RU ru_RU.UTF-8
